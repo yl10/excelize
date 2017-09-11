@@ -639,6 +639,43 @@ func (f *File) GetSheetVisible(name string) bool {
 	return visible
 }
 
+// AddProtectedRange provides function to Add editable area
+//pwd is reserved, temporarily not used, do not know the encryption algorithm.
+func (f *File) AddProtectedRange(sheet, sqref, name string, pwd ...string) {
+	st := f.workSheetReader(sheet)
+
+	if st.ProtectedRanges.ProtectedRange == nil {
+		st.ProtectedRanges.ProtectedRange = make([]*xlsxSheetProtectedRange, 0)
+
+	}
+
+	r := xlsxSheetProtectedRange{Sqref: sqref, Name: name}
+	if len(pwd) > 0 {
+
+	}
+	st.ProtectedRanges.ProtectedRange = append(st.ProtectedRanges.ProtectedRange, &r)
+}
+
+//ProtectedSheel
+func (f *File) ProtectedSheel(sheet string, pwd ...string) {
+	st := f.workSheetReader(sheet)
+
+	sp := xlsxSheetProtection{
+		Sheet:              1,
+		SelectUnlockedCell: 1,
+		SelectLockedCells:  1,
+	}
+	if len(pwd) > 0 {
+
+	}
+	st.SheetProtection = &sp
+
+}
+
+func (f *File)ProtectedSheetAllowToDo(sheet string ,allowOption...){
+
+}
+
 // trimSheetName provides function to trim invaild characters by given worksheet
 // name.
 func trimSheetName(name string) string {

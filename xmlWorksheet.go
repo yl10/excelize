@@ -14,6 +14,9 @@ type xlsxWorksheet struct {
 	Cols                  *xlsxCols                    `xml:"cols,omitempty"`
 	SheetData             xlsxSheetData                `xml:"sheetData"`
 	SheetProtection       *xlsxSheetProtection         `xml:"sheetProtection"`
+	ProtectedRanges struct { 
+		ProtectedRange []*xlsxSheetProtectedRange
+	} `xml:"protectedRanges,omitempty"`
 	AutoFilter            *xlsxAutoFilter              `xml:"autoFilter"`
 	MergeCells            *xlsxMergeCells              `xml:"mergeCells"`
 	PhoneticPr            *xlsxPhoneticPr              `xml:"phoneticPr"`
@@ -547,4 +550,15 @@ type formatConditional struct {
 	MaxLength    string `json:"max_length,omitempty"`
 	MultiRange   string `json:"multi_range,omitempty"`
 	BarColor     string `json:"bar_color,omitempty"`
+}
+
+
+type xlsxSheetProtectedRange struct {
+	XMLName       xml.Name `xml:"protectedRange"`
+	AlgorithmName string   `xml:"algorithmName,attr,omitempty"`
+	HashValue     string   `xml:"hashValue,attr,omitempty"`
+	SaltValue     string   `xml:"saltValue,attr,omitempty"`
+	SpinCount     string   `xml:"spinCount,attr,omitempty"`
+	Sqref         string   `xml:"sqref,attr,omitempty"`
+	Name          string   `xml:"name,attr,omitempty"`
 }
